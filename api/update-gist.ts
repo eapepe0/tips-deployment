@@ -7,7 +7,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!Array.isArray(tips)) return res.status(400).send("Formato inválido");
 
   const gistId = process.env.VITE_GIST_ID; // tu ID del Gist
-  const token = process.env.VITE_GITHUB_TOKEN; // guardado en las variables de entorno de Vercel
+  const token = process.env.VITE_GITHUB_TOKEN_GIST; // guardado en las variables de entorno de Vercel
 
   const response = await fetch(`https://api.github.com/gists/${gistId}`, {
     method: "PATCH",

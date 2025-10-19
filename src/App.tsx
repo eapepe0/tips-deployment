@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuCheckboxItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect, useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
+import { Textarea } from "./components/ui/textarea";
+import { Badge } from "./components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuCheckboxItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
+import { Separator } from "./components/ui/separator";
+import { Tabs,  TabsList, TabsTrigger } from "./components/ui/tabs";
 import { toast } from "sonner";
-import { Check, Clipboard, Download, Filter, FolderUp, ListFilter, Plus, RefreshCw, Save, Trash2, Upload } from "lucide-react";
+import {  Clipboard, Download, Filter, ListFilter, Plus, RefreshCw, Save, Trash2, Upload } from "lucide-react";
 import { ThemeToggle } from "./components/ui/ThemeToggle";
 import { useLocalStorageTips } from "./hooks/useLocalStorageTips";
 
@@ -24,60 +24,6 @@ interface Tip {
   createdAt: number;
 }
 
-const defaultTips: Tip[] = [
-  {
-    id: crypto.randomUUID(),
-    title: "Checklist de pre‑deploy",
-    content: [
-      "✔️ Tests pasando (unit/integration)",
-      "✔️ Variables .env revisadas (prod/staging)",
-      "✔️ Backups automáticos verificados",
-      "✔️ Migraciones de base de datos probadas",
-      "✔️ Healthcheck y monitorización activos",
-      "✔️ Rollback plan (tag/backup) preparado",
-    ].join("\n"),
-    category: "General",
-    tags: ["checklist", "predeploy"],
-    type: "checklist",
-    createdAt: Date.now(),
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Git – flow rápido para release",
-    content: `# Crear rama de release\n git checkout main\n git pull --ff-only\n git checkout -b release/vX.Y.Z\n\n# Bump de versión y changelog\n npm version patch\n git commit -am "chore: bump version"\n\n# Merge y tag\n git checkout main && git merge --no-ff release/vX.Y.Z\n git tag vX.Y.Z && git push --follow-tags\n\n# Borrar rama\n git branch -d release/vX.Y.Z`,
-    category: "Git",
-    tags: ["git", "release", "tags"],
-    type: "code",
-    createdAt: Date.now(),
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Docker – build y run básicos",
-    content: `# Build con etiqueta\n docker build -t miapp:latest .\n\n# Correr con .env y puerto\n docker run --env-file .env --name miapp -p 8080:3000 miapp:latest\n\n# Logs follow\n docker logs -f miapp\n\n# Limpiar dangling images\n docker image prune -f`,
-    category: "Docker",
-    tags: ["docker", "run", "build"],
-    type: "code",
-    createdAt: Date.now(),
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "NGINX – bloque server base (reverse proxy)",
-    content: `server {\n  listen 80;\n  server_name ejemplo.com www.ejemplo.com;\n\n  location / {\n    proxy_pass http://127.0.0.1:3000;\n    proxy_set_header Host $host;\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    proxy_set_header X-Forwarded-Proto $scheme;\n  }\n}`,
-    category: "Infra",
-    tags: ["nginx", "proxy"],
-    type: "code",
-    createdAt: Date.now(),
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Node – PM2 comandos útiles",
-    content: `pm2 start dist/server.js --name miapp\npm2 list\npm2 logs miapp\npm2 restart miapp\npm2 save`,
-    category: "Node",
-    tags: ["pm2", "node"],
-    type: "code",
-    createdAt: Date.now(),
-  },
-];
 
 
 function formatMultiline(text: string) {
@@ -162,6 +108,7 @@ export default function DeployNotesApp() {
     toast.success("Gist sincronizado con éxito");
   } catch (err) {
     toast.error("No se pudo sincronizar con el Gist");
+    console.log(err)
   }
 }
 
@@ -193,10 +140,6 @@ export default function DeployNotesApp() {
     toast("Tip agregado");
   }
 
-  function handleResetToDefaults() {
-    setTips(defaultTips.map((t) => ({ ...t, id: crypto.randomUUID(), createdAt: Date.now() })));
-    toast("Restaurado a los ejemplos base");
-  }
 
   function exportJSON() {
     const blob = new Blob([JSON.stringify(tips, null, 2)], { type: "application/json" });
@@ -219,6 +162,7 @@ export default function DeployNotesApp() {
         toast("Importado correctamente");
       } catch (e) {
         toast("No se pudo importar el archivo");
+        console.log(`Error en importJSON : ${e}`)
       }
     };
     reader.readAsText(file);

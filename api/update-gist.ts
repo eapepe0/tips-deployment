@@ -29,5 +29,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).send(error);
   }
   console.log("Gist actualizado")
+  console.log(response)
   res.status(200).json({ message: "Gist actualizado" });
 }

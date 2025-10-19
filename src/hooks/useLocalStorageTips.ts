@@ -32,6 +32,7 @@ export function useLocalStorageTips() {
 
         // 2️⃣ Intentar actualizar desde la URL remota
         const response = await fetch(import.meta.env.VITE_REMOTE_URL, { cache: "no-store" });
+        console.log(response)
         if (!response.ok) throw new Error("No se pudo cargar el JSON remoto");
         const remoteData = await response.json();
         if (Array.isArray(remoteData)) {

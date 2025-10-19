@@ -69,7 +69,16 @@ function TipCard({
   onEdit: (tip: Tip) => void;
 }) {
   return (
-    <Card className="shadow-sm hover:shadow-md transition-all duration-200 h-full flex flex-col">
+    <Card className={`shadow-sm hover:shadow-md transition-all duration-200 h-full flex flex-col border-2
+    ${
+      tip.type === "note"
+        ? "border-amber-500" // 🟡 notas
+        : tip.type === "checklist"
+        ? "border-emerald-500" // 🟢 checklist
+        : tip.type === "code"
+        ? "border-sky-500" // 🔵 código
+        : "border-border" // por defecto (neutro)
+    }`}>
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2 justify-between">
           <CardTitle className="text-base font-semibold">{tip.title}</CardTitle>

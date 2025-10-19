@@ -1,0 +1,265 @@
+[
+{
+"title": "Subida sin .gitignore",
+"category": "Git",
+"tags": ["node_modules", "git"],
+"type": "code",
+"content": "git rm -r --cached node_modules\ngit commit -m 'Removed node_modules'\ngit push"
+},
+{
+"title": "Eliminar .env del historial",
+"category": "Git",
+"tags": ["env", "historial"],
+"type": "code",
+"content": "git filter-branch --index-filter \"git rm -rf --cached --ignore-unmatch .env\" HEAD\ngit push --force"
+},
+{
+"title": "Comandos Git avanzados",
+"category": "Git",
+"tags": ["branch", "merge", "clone"],
+"type": "note",
+"content": "git log --oneline\ngit branch nombreRama\ngit checkout nombreRama\ngit checkout -b nuevaRama\ngit merge nombreRama\ngit branch -d nombreRama\ngit clone 'url.git'"
+},
+{
+"title": "Instalar Storybook",
+"category": "Frontend",
+"tags": ["storybook", "react"],
+"type": "checklist",
+"content": "1. Crear proyecto con npx create-react-app nombre --template=typescript\n2. yarn install\n3. yarn remove react-scripts\n4. Dejar solo index.tsx y package.json\n5. npx storybook@latest init\n6. yarn storybook\n7. Ajustar package.json con scripts 'storybook dev' y 'storybook build'"
+},
+{
+"title": "Crear PWA",
+"category": "Frontend",
+"tags": ["pwa", "react"],
+"type": "code",
+"content": "npx create-react-app my-app --template cra-template-pwa"
+},
+{
+"title": "Instalar TailwindCSS",
+"category": "Frontend",
+"tags": ["tailwind", "css"],
+"type": "checklist",
+"content": "1. npm i -D tailwindcss postcss autoprefixer\n2. npx tailwindcss init -p\n3. Configurar content y theme\n4. En index.css: @tailwind base; @tailwind components; @tailwind utilities;"
+},
+{
+"title": "Mejorar normalize.css y fonts",
+"category": "Frontend",
+"tags": ["normalize", "fonts"],
+"type": "checklist",
+"content": "1. Descargar fonts desde https://gwfh.mranftl.com/fonts\n2. Copiar CSS en index.css\n3. Descargar normalize.css y colocarlo en src\n4. Reemplazar links externos por locales"
+},
+{
+"title": "Crear DB en MySQL",
+"category": "Backend",
+"tags": ["mysql", "db"],
+"type": "checklist",
+"content": "1. Ir a C:/Program Files/MySQL/MySQL Server 8.0/bin\n2. mysql -u root -p\n3. Ingresar password\n4. create database <nombre>;"
+},
+{
+"title": "Crear proyecto Next.js",
+"category": "Frontend",
+"tags": ["next", "react"],
+"type": "checklist",
+"content": "1. npx create-next-app nombre\n2. Typescript No\n3. ESLint Yes\n4. Tailwind Yes\n5. src dir No\n6. App Router Yes"
+},
+{
+"title": "Crear DB con Prisma",
+"category": "Backend",
+"tags": ["prisma", "db"],
+"type": "checklist",
+"content": "1. npm i @prisma/client\n2. npm i -D prisma\n3. npx prisma init\n4. Configurar DB_URL en .env\n5. Crear tablas en prisma/schema.prisma\n6. npx prisma migrate dev\n7. Crear seed con ts-node\n8. npx prisma db seed\n9. npx prisma studio"
+},
+{
+"title": "Crear proyecto Astro",
+"category": "Frontend",
+"tags": ["astro", "static"],
+"type": "checklist",
+"content": "1. npm create astro@latest\n2. Nombre del proyecto\n3. sample files: empty\n4. typescript: Yes (strict Yes)\n5. install deps: Yes\n6. init git repo: Yes\n7. npm run dev"
+},
+{
+"title": "Instalar Yarn",
+"category": "Backend",
+"tags": ["node", "static"],
+"type": "checklist",
+"content": "npm install --global yarn"
+},
+{
+"title": "Crear programa con vite",
+"category": "Frontend",
+"tags": ["react", "node"],
+"type": "checklist",
+"content": "yarn create vite nombre-app --template react-ts"
+},
+{
+"title": "Correr programa",
+"category": "Frontend",
+"tags": ["react", "node"],
+"type": "checklist",
+"content": "npm run dev o yarn dev"
+},
+{
+"title": "Crear Distribucion",
+"category": "backend",
+"tags": ["react", "node"],
+"type": "checklist",
+"content": "npm run build o yarn build"
+},
+{
+"title": "Deploy en Netlify",
+"category": "Frontend",
+"tags": ["react", "netlify","build"],
+"type": "checklist",
+"content": "1. La App funciona?\n2.Generamos la carpetad de distribucion con : yarn build\n3. Entramos a netlify.com entramos con nuestra cuenta de github. \n4. Add New Site --> Manual Deploy --> Tiramos la carpeta /dist. \n4b. O entramos a https://app.netlify.com/drop y TIRAMOS LA CARPETA DIST AHI\n5.UNA VEZ QUE TERMINE DE SUBIR TENEMOS NUESTRA URL CON NUESTRA APP.\n6. Para cambiar la url asignada, vamos a Site Settings --> Change Site Name"
+},
+{
+"title": "Deploy en Github",
+"category": "Frontend",
+"tags": ["react", "github","build"],
+"type": "checklist",
+"content": "1. PREPARAR REPOSITORIO (TENER .gitignore)\n2.git init (inicializamos repositorio)\n3. git add . (hacemos commit)\n4. git commit -m 'mensaje' (primer commit por ej)\n 5. vamos a github --> New repository o en el + (New repository)\n6. Le ponemos un nombre unico , una descripcion , publico ... --> Crear repositorio\n7. gitbranch-M main\n8. git remote add origin 'URL DADA POR GITHUB'\n9. git push -u origin main\n10.Si agregamos algun archivo despues de subirlo, hacemos :\n11. git add . \n12. git commit -m 'Readme agregado' por ejemplo'\n13. git push\n"
+},
+{
+"title": "Instalar Redux",
+"category": "Frontend",
+"tags": ["redux", "react"],
+"type": "checklist",
+"content":
+"1. Creamos normalmente nuestro proyecto en vite => React => Javascript etc\n2. instalamos :\n3.yarn add @reduxjs/toolkit \n4. yarn add react-redux \n"
+},
+{
+"title": "Instalar DotEnv (variables de entorno)",
+"category": "Backend",
+"tags": ["react", "javascript"],
+"type": "checklist",
+"content":
+"1. yarn add -D dotenv\n2.\ncon -D decimos que se instale solo para desarrollo"
+},
+{
+"title": "Agregar .env a .gitignore",
+"category": "Frontend",
+"tags": ["git", "env","gitignore"],
+"type": "checklist",
+"content":
+"1. Agregamos .env a .gitignore para no compartir nuestras api_keys cuando subimos nuestro proyecto\n"
+},
+{
+"title": "Crear package.json por defecto (Node)",
+"category": "Backend",
+"tags": ["node", "package"],
+"type": "checklist",
+"content":
+"1. npm init -y\n"
+},
+{
+"title": "Ejecutar archivo en Node",
+"category": "Backend",
+"tags": ["node", "package"],
+"type": "checklist",
+"content":
+"1. node index.js\n"
+},
+{
+"title": "Instalar Nodemon",
+"category": "Backend",
+"tags": ["node", "package"],
+"type": "checklist",
+"content":
+"Ejecuta cada vez que hay un cambio \n1. npm i nodemon\n2. npm i nodemon -g (para instalar globalmente) ejecutar la linea de comandos desde administrador\n3. nodemon index.js (ejecutar index.js desde nodemon\n"
+},
+{
+"title": "Subida sin .gitignore",
+"category": "Frontend",
+"tags": ["git", "env","gitignore"],
+"type": "checklist",
+"content":
+"Si se subio la carpeta node_modules a github , por que no tenemos el .gitignore\nCreamos el archivo .gitignore\n# Logs\nlogs\n*.log\nnpm-debug.log*\nyarn-debug.log*\nyarn-error.log*\npnpm-debug.log*\nlerna-debuglog*\n\nnode_modules\ndist\ndist-ssr\n*.local\n\n# Editor directories and files\n.vscode/*\n!.vscode/extensions.json\n.idea\n.DS_Store\n*.suo\n*.ntvs*\n*.njsproj\n*.sln\n*sw?\n1. git rm -r --cached node_modules\n2. git commit -m 'Removed node_modules'\n 3. git push  o git push origin master (la 2da opcion no funciono)"
+},
+{
+"title": "Subida de .env",
+"category": "Backend",
+"tags": ["env", "node","git"],
+"type": "checklist",
+"content":
+"1. git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch .env' HEAD\n2. git push --force\n"
+},
+{
+"title": "Para ver donde estamos parados en git",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git log --oneline\n"
+},
+{
+"title": "Crear una rama",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git branch nombreRama  ej: leccion 12\n"
+},
+{
+"title": "Movernos de rama",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git checkout nombreRama\n"
+},
+{
+"title": "Crear rama y movernos a ella",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git checkout -b nombreRama\n"
+},
+{
+"title": "Ver en que rama estamos",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git branch\n"
+},
+{
+"title": "Agregar algo desde la rama nueva",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"1. git add .\n2. git commit -m 'texto commit'\n3. git push --set-upstream origin nombreRama\n"
+},
+{
+"title": "Hacer un merge",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"1. nos movemos al master\n2. git checkout master\n3. git branch (para ver donde estamos parados)\n4. git merge nombreRama (unimos esa rama al master)"
+},
+{
+"title": "Borrar rama",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git branch -d nombreRama\n"
+},
+{
+"title": "Borramos algo accidentamente en git",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"git checkout -- ."
+},
+{
+"title": "Clonar repositorio",
+"category": "Backend",
+"tags": ["git"],
+"type": "checklist",
+"content":
+"1. vamos con la terminal a la carpeta donde queremos clonar cd ... etc\n2. git clone 'url con el .git'\n"
+}
+]

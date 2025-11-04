@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export interface Tip {
   id: string;
@@ -10,7 +11,8 @@ export interface Tip {
   createdAt: number;
 }
 
-
+const STORAGE_KEY = import.meta.env.VITE_STORAGE_KEY || "deploy_notes_v1";
+const REMOTE_URL = import.meta.env.VITE_REMOTE_URL;
 
 // ⚙️ URL de tu JSON remoto (por ejemplo, un archivo en GitHub)
 
@@ -21,41 +23,49 @@ export function useLocalStorageTips() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadTips() {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    // si existe en el LS lo pasamos a tips
+    if(stored){
       try {
-        // 1️⃣ Si hay algo en localStorage, usarlo primero
-        const saved = localStorage.getItem(import.meta.env.VITE_STORAGE_KEY);
-        if (saved) {
-          setTips(JSON.parse(saved));
-          setLoading(false);
-        }
-
-        // 2️⃣ Intentar actualizar desde la URL remota
-        const response = await fetch(import.meta.env.VITE_REMOTE_URL, { cache: "no-store" });
-        console.log(response)
-        if (!response.ok) throw new Error("No se pudo cargar el JSON remoto");
-        const remoteData = await response.json();
-        if (Array.isArray(remoteData)) {
-          setTips(remoteData);
-          localStorage.setItem(import.meta.env.VITE_STORAGE_KEY, JSON.stringify(remoteData));
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Error al cargar los tips");
-      } finally {
+        const parsed = JSON.parse(stored) as Tip[];
+        setTips(parsed);
         setLoading(false);
+        toast.success("Datos cargados desde LocalStorage , utilice Actualizar desde si quiere sync");
+        console.log("Datos cargados desde LocalStorage")
+      } catch {
+        console.warn("Error leyendo localStorage, se limpiara");
+        localStorage.removeItem(STORAGE_KEY)
       }
+      // si no existe el LS llamamos a la url
+    } else{
+      console.log("🌐 Descargando datos iniciales desde Gist...")
+      fetch(REMOTE_URL , {cache : "no-store"})
+      .then((res) => res.json())
+      .then((data) => {
+        // verificamos que sea un array y lo pasamos a tips y al LS
+        if(Array.isArray(data)){
+          setTips(data);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          toast.success("Datos cargados desde Gist");
+        } else{
+          throw new Error("Formato remoto no valido");
+        }
+      })
+      .catch((err)=>{
+        console.error("❌ Error cargando desde Gist:", err);
+        setError("No se pudieron obtener los datos iniciales.");
+      })
+      .finally(()=> setLoading(false)); // terminamos de cargar
     }
-
-    loadTips();
-  }, []);
-
-  // 3️⃣ Cada vez que cambien los tips, actualizar localStorage
+  }, []); // se ejecuta cuando se monta el componente
+  
+  // se ejecuta cada vez que cambian los tips o el loading
+  // pasamos los items al LS
   useEffect(() => {
-    if (tips.length > 0) {
-      localStorage.setItem(import.meta.env.VITE_STORAGE_KEY, JSON.stringify(tips));
+    if (!loading && tips.length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tips));
     }
-  }, [tips]);
+  }, [tips, loading]);
 
   return { tips, setTips, loading, error };
 }

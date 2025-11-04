@@ -334,10 +334,15 @@ export default function DeployNotesApp() {
   });
 
   async function actualizarDesdeNube() {
+    toast.info("Actualizando desde Gist...");
     try {
       const res = await fetch(import.meta.env.VITE_REMOTE_URL, {
         cache: "no-store",
       });
+      if (!res.ok){
+        toast.error(`HTTP ${res.status}`)
+        throw new Error(`HTTP ${res.status}`); // si no existe una respuesta buena mostramos el error
+      } 
       const data = await res.json();
       if (Array.isArray(data)) {
         setTips(data);
@@ -346,9 +351,11 @@ export default function DeployNotesApp() {
           JSON.stringify(data)
         );
         toast.success("Datos actualizados desde la nube");
+        localStorage.setItem("deploy_notes_last_sync", new Date().toISOString());
       }
-    } catch {
+    } catch (err) {
       toast.error("No se pudo actualizar desde la nube");
+      console.error("Error al sincronizar desde Gist:", err);
     }
   }
 
@@ -550,6 +557,10 @@ export default function DeployNotesApp() {
             <span>Atajo: </span>
             <kbd className="px-1.5 py-0.5 rounded bg-muted border">/</kbd>
             <span>para enfocar búsqueda</span>
+          </div>
+          <div className="text-xs text-muted-foreground">
+            Última sincronización:{" "}
+            {new Date(localStorage.getItem("deploy_notes_last_sync") || Date.now()).toLocaleString()}
           </div>
         </footer>
       </div>
